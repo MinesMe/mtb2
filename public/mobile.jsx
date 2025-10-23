@@ -195,6 +195,14 @@ function MobileApp() {
   const [notifCount, setNotifCount] = useState(2);
   const [active, setActive] = useState('home');
   const [showMapPage, setShowMapPage] = useState(false);
+  const mapContainerRef = React.useRef(null);
+  
+  React.useEffect(() => {
+    if (showMapPage && mapContainerRef.current) {
+      // Прокрутка вниз (к концу карты) при открытии
+      mapContainerRef.current.scrollTop = mapContainerRef.current.scrollHeight;
+    }
+  }, [showMapPage]);
 
   // quick actions + report wizard
   const [q1, setQ1] = useState('');
@@ -447,7 +455,7 @@ function MobileApp() {
                   <polyline points="12 19 5 12 12 5"></polyline>
                 </svg>
               </button>
-              <div className="map-container">
+              <div className="map-container" ref={mapContainerRef}>
                 <img src="/media/map.svg" alt="Карта пути" className="map-image" />
               </div>
             </div>

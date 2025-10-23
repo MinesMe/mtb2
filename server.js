@@ -180,8 +180,8 @@ app.post('/api/analyze', upload.single('pdf'), async (req, res) => {
     if (!key) {
       return res.status(500).json({ error: 'GEMINI_API_KEY is not configured' });
     }
-    const model = process.env.GEMINI_MODEL || 'gemini-1.5-pro';
-    const fallbackModel = 'gemini-1.0-pro';
+    const model = process.env.GEMINI_MODEL || 'gemini-2.0-flash-exp';
+    const fallbackModel = 'gemini-1.5-flash';
     if (!req.file) {
       return res.status(400).json({ error: 'PDF файл обязателен' });
     }
@@ -215,17 +215,32 @@ app.post('/api/analyze', upload.single('pdf'), async (req, res) => {
         temperature: 0.3,
         topK: 40,
         topP: 0.95,
-        maxOutputTokens: 3072
+        maxOutputTokens: 8192
       }
     };
     async function call(modelName) {
       const endpoint = `${endpointBase}${encodeURIComponent(modelName)}:generateContent?key=${encodeURIComponent(key)}`;
-      const r = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      });
-      return r;
+      
+      // Увеличенный таймаут - 5 минут
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 300000); // 5 min
+      
+      try {
+        const r = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        return r;
+      } catch (err) {
+        clearTimeout(timeoutId);
+        if (err.name === 'AbortError') {
+          console.error('Request timeout after 5 minutes');
+        }
+        throw err;
+      }
     }
 
     // Try primary model, then fallback if needed
@@ -247,10 +262,30 @@ app.post('/api/analyze', upload.single('pdf'), async (req, res) => {
     }
 
     const json = await r.json();
-    const text =
-      json?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') ||
-      json?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      'Нет ответа от модели';
+    console.log('Gemini API response structure:', JSON.stringify(json, null, 2).slice(0, 500));
+    
+    // Улучшенная обработка ответа
+    let text = '';
+    
+    if (json?.candidates && json.candidates.length > 0) {
+      const candidate = json.candidates[0];
+      
+      if (candidate?.content?.parts && Array.isArray(candidate.content.parts)) {
+        text = candidate.content.parts.map(p => p.text || '').join('');
+      } else if (candidate?.content?.parts?.[0]?.text) {
+        text = candidate.content.parts[0].text;
+      } else if (candidate?.text) {
+        text = candidate.text;
+      }
+    }
+    
+    // Если текст пустой, логируем весь ответ
+    if (!text || text.trim() === '') {
+      console.error('Empty response from Gemini. Full JSON:', JSON.stringify(json, null, 2));
+      text = 'Нет ответа от модели. Проверьте логи сервера.';
+    } else {
+      console.log('Successfully extracted text, length:', text.length);
+    }
 
     res.setHeader('Cache-Control', 'no-store');
     return res.json({ analysis: text });

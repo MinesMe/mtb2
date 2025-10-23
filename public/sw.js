@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mtb-mobile-v19';
+const CACHE_NAME = 'mtb-mobile-v23';
 const ASSETS = [
   '/',
   '/mobile.html',
