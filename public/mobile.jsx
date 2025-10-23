@@ -56,10 +56,10 @@ function CarouselPlaceholder() {
     <section className="carousel">
       <div className="carousel-track">
         <div className="product-card svg-card">
-          <img src="/media/SUPEROMAVISA.svg" alt="SuperOma Visa" className="card-image" />
+          <img src="media/SUPEROMAVISA.svg" alt="SuperOma Visa" className="card-image" />
         </div>
         <div className="product-card svg-card">
-          <img src="/media/SUPEROMAMASTERCARD.svg" alt="SuperOma MasterCard" className="card-image" />
+          <img src="media/SUPEROMAMASTERCARD.svg" alt="SuperOma MasterCard" className="card-image" />
         </div>
       </div>
       <div className="cards-divider">
@@ -74,7 +74,7 @@ function CarouselPlaceholder() {
 function SuperOmaButton({ onClick }) {
   return (
     <button className="superoma-full-btn" onClick={onClick}>
-      <img src="/media/сыгасуперома.svg" alt="Сыграть SuperOma" className="superoma-btn-image" />
+      <img src="media/сыгасуперома.svg" alt="Сыграть SuperOma" className="superoma-btn-image" />
     </button>
   );
 }
@@ -456,7 +456,7 @@ function MobileApp() {
                 </svg>
               </button>
               <div className="map-container" ref={mapContainerRef}>
-                <img src="/media/map.svg" alt="Карта пути" className="map-image" />
+                <img src="media/map.svg" alt="Карта пути" className="map-image" />
               </div>
             </div>
           )}
@@ -577,7 +577,7 @@ function MobileApp() {
           )}
         </main>
         <button className="fab" onClick={()=>{ setOpen(true); resetWizard(); }} aria-label="Создать отчет">
-          <img src="/media/книпкаподсчеткредита.svg" alt="Подсчет кредита" className="fab-image" />
+          <img src="media/книпкаподсчеткредита.svg" alt="Подсчет кредита" className="fab-image" />
         </button>
 
         <BottomNav active={active} onChange={setActive} />

@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
   <title>МТБанк — мобильный отчет</title>
   <meta name="theme-color" content="#0b1220">
-  <link rel="manifest" href="/manifest.webmanifest?v=23">
-  <link rel="stylesheet" href="/styles.css?v=23">
+  <link rel="manifest" href="manifest.webmanifest?v=23">
+  <link rel="stylesheet" href="styles.css?v=23">
 </head>
 <body class="mobile-body">
   <div id="root"></div>
@@ -18,10 +18,10 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(()=>{});
+        navigator.serviceWorker.register('sw.js').catch(()=>{});
       });
     }
   </script>
-  <script type="text/babel" data-presets="react" src="/mobile.jsx?v=23"></script>
+  <script type="text/babel" data-presets="react" src="mobile.jsx?v=23"></script>
 </body>
 </html>
