@@ -180,8 +180,8 @@ app.post('/api/analyze', upload.single('pdf'), async (req, res) => {
     if (!key) {
       return res.status(500).json({ error: 'GEMINI_API_KEY is not configured' });
     }
-    const model = process.env.GEMINI_MODEL || 'gemini-2.0-flash-exp';
-    const fallbackModel = 'gemini-1.5-flash';
+    const model = process.env.GEMINI_MODEL || 'gemini-1.5-pro-latest';
+    const fallbackModel = 'gemini-1.5-pro-latest';
     if (!req.file) {
       return res.status(400).json({ error: 'PDF файл обязателен' });
     }
