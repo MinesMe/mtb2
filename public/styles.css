@@ -188,10 +188,14 @@ nav a{color:var(--text);text-decoration:none;margin-left:16px}
 .carousel-track{display:flex;gap:16px;align-items:center;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px}
 .carousel-track::-webkit-scrollbar{display:none}
 .product-card{scroll-snap-align:start;min-width:85%;background:rgba(17,26,43,.72);border:1px solid var(--border);border-radius:16px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
-.superoma-full-btn{width:100%;padding:0;border:none;background:transparent;cursor:pointer;transition:transform .2s ease;margin:12px 0}
-.superoma-full-btn:hover{transform:scale(1.02)}
-.superoma-full-btn:active{transform:scale(0.98)}
-.superoma-full-btn .superoma-btn-image{width:100%;height:auto;object-fit:contain;display:block}
+/* Frequently Used Buttons */
+.frequently-used-section{margin:16px 0}
+.frequently-used-title{font-size:16px;font-weight:600;color:var(--text);margin:0 0 12px 0}
+.frequently-used-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.frequently-used-btn{padding:0;border:none;background:transparent;cursor:pointer;transition:transform .2s ease;border-radius:12px;overflow:hidden}
+.frequently-used-btn:hover{transform:scale(1.05)}
+.frequently-used-btn:active{transform:scale(0.95)}
+.frequently-used-image{width:100%;height:auto;object-fit:contain;display:block;border-radius:12px}
 .product-card.cactus{background:radial-gradient(200px 120px at 20% 20%,rgba(139,92,246,.28),transparent),rgba(17,26,43,.72)}
 .product-card.payokay{background:radial-gradient(200px 120px at 80% 20%,rgba(236,72,153,.28),transparent),rgba(17,26,43,.72)}
 .product-card.svg-card{display:flex;align-items:center;justify-content:center;padding:0;background:transparent;border:none;box-shadow:none}
